@@ -1,5 +1,7 @@
 # Agentic AI Workflows (Single & Multi-Agent)
 
+[![GitHub](https://img.shields.io/badge/GitHub-ovalles2019%2Fagentic--ai--workflows-181717?logo=github)](https://github.com/ovalles2019/agentic-ai-workflows)
+
 A hands-on portfolio lab for **LangChain**, **LangGraph**, **CrewAI**, and **AutoGen**. Each example solves the same business task—produce a **market research brief**—using a different orchestration style so you can compare frameworks in interviews and on your resume.
 
 ## What you get
@@ -14,12 +16,10 @@ A hands-on portfolio lab for **LangChain**, **LangGraph**, **CrewAI**, and **Aut
 ## Quick start
 
 ```bash
-cd "/Users/oscarvalles/Agentic AI workflows (single:multi-agent) "
-# Note: ':' in the folder name breaks `python -m venv` on macOS — use /tmp venv:
-python3 -m venv /tmp/agentic-workflows-venv
+git clone https://github.com/ovalles2019/agentic-ai-workflows.git
+cd agentic-ai-workflows
+./setup.sh
 source /tmp/agentic-workflows-venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
 ```
 
 ### Run without API keys (mock mode)
