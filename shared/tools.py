@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from langchain_core.tools import tool
 
+from shared.memory import MemoryStore
+
 # Curated snippets so demos work without live web search.
 KNOWLEDGE_BASE: dict[str, str] = {
     "market": (
@@ -52,3 +54,20 @@ def estimate_tam(segment: str) -> str:
 
 def get_research_tools():
     return [search_market_intel, estimate_tam]
+
+
+def get_memory_tools(store: MemoryStore | None = None):
+    """Tools an agent calls to read and write long-term memory."""
+    memory = store or MemoryStore()
+
+    @tool
+    def remember(note: str) -> str:
+        """Save a fact or preference that must still be there in a later session."""
+        return memory.remember(note)
+
+    @tool
+    def recall(query: str) -> str:
+        """Look up facts from earlier sessions. The current chat does not contain them."""
+        return memory.recall(query)
+
+    return [remember, recall]
