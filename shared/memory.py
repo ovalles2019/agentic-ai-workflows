@@ -13,7 +13,7 @@ from pathlib import Path
 
 def _tokens(text: str) -> set[str]:
     words = "".join(ch.lower() if ch.isalnum() else " " for ch in text).split()
-    return {word for word in words if len(word) > 2}
+    return {word for word in words if len(word) > 1}
 
 
 class MemoryStore:
