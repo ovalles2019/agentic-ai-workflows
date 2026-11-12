@@ -12,6 +12,7 @@ A hands-on portfolio lab for **LangChain**, **LangGraph**, **CrewAI**, and **Aut
 | `02_langgraph_multi_agent` | LangGraph | Researcher → Writer → Reviewer graph | Explicit state, conditional routing, retries |
 | `03_crewai_multi_agent` | CrewAI | Role-based sequential crew | Task delegation, role prompts, pipelines |
 | `04_autogen_multi_agent` | AutoGen | Round-robin conversation | Multi-agent dialogue, emergent collaboration |
+| `05_agent_memory` | none (a JSON file) | remember / recall across two sessions | Working memory vs long-term memory |
 
 ## Quick start
 
@@ -44,6 +45,7 @@ python -m examples.01_langchain_single_agent
 python -m examples.02_langgraph_multi_agent
 python -m examples.03_crewai_multi_agent
 python -m examples.04_autogen_multi_agent
+python -m examples.05_agent_memory
 ```
 
 ## Architecture (same problem, four styles)
@@ -81,8 +83,8 @@ flowchart LR
 ## Project layout
 
 ```
-shared/           # Config, mock LLM, shared research tools
-examples/         # Four runnable demos
+shared/           # Config, mock LLM, research tools, memory store
+examples/         # Five runnable demos
 run.py            # Menu CLI
 requirements.txt
 .env.example
@@ -97,6 +99,23 @@ requirements.txt
 **CrewAI** — You define *roles and tasks*; the framework sequences work. Fastest path to readable multi-agent pipelines.
 
 **AutoGen** — Agents *talk* until termination. Strong for exploratory tasks and critique/revise loops.
+
+## Memory (example 05)
+
+The model does not remember. It only sees the text in this call.
+
+| Kind | Where it lives | Still there next run? |
+|------|----------------|------------------------|
+| Working memory | The message list for this run | No |
+| Long-term memory | `data/memory.json`, via `remember` / `recall` | Yes |
+
+Session 2 in the demo starts with an empty message list. The rollout constraint comes back only because session 1 called `remember`. Matching is keyword overlap: the note has to share words with the query.
+
+`get_memory_tools()` is the same shape as `get_research_tools()`. Pass both into an agent when you want one of the other four examples to read and write that file.
+
+```bash
+MOCK_LLM=1 python run.py memory
+```
 
 ## Resume bullet ideas
 

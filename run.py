@@ -11,6 +11,7 @@ EXAMPLES = {
     "2": ("langgraph", "examples.02_langgraph_multi_agent", "Multi-agent graph (LangGraph)"),
     "3": ("crewai", "examples.03_crewai_multi_agent", "Role-based crew (CrewAI)"),
     "4": ("autogen", "examples.04_autogen_multi_agent", "Conversational team (AutoGen)"),
+    "5": ("memory", "examples.05_agent_memory", "Agent memory (working vs long-term)"),
 }
 
 
@@ -19,7 +20,7 @@ def main() -> None:
     parser.add_argument(
         "example",
         nargs="?",
-        choices=["all", "langchain", "langgraph", "crewai", "autogen", "1", "2", "3", "4"],
+        choices=["all", "langchain", "langgraph", "crewai", "autogen", "memory", "1", "2", "3", "4", "5"],
         help="Which example to run (default: menu)",
     )
     parser.add_argument("--topic", help="Override RESEARCH_TOPIC")
@@ -30,13 +31,13 @@ def main() -> None:
         for key, (_, _, label) in EXAMPLES.items():
             print(f"  {key}. {label}")
         print("  all. Run every example")
-        choice = input("\nSelect [1-4 or all]: ").strip().lower() or "1"
+        choice = input("\nSelect [1-5 or all]: ").strip().lower() or "1"
     else:
         choice = args.example.lower()
 
     to_run: list[str]
     if choice == "all":
-        to_run = ["1", "2", "3", "4"]
+        to_run = ["1", "2", "3", "4", "5"]
     elif choice in EXAMPLES:
         to_run = [choice]
     else:
